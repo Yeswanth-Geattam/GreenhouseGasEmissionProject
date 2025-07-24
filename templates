@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Greenhouse Gas Emission Predictor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f3;
+            padding: 40px;
+            color: #2c3e50;
+        }
+        h1 {
+            color: #1e8449;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #117864;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        select, input[type="submit"] {
+            padding: 10px;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        img {
+            max-width: 90%;
+            margin-top: 30px;
+            border: 2px solid #aaa;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+        }
+        table {
+            border-collapse: collapse;
+            width: 60%;
+            margin-top: 15px;
+            background: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #2ecc71;
+            color: white;
+        }
+        td {
+            background-color: #fafafa;
+        }
+    </style>
+</head>
+<body>
 
+    <h1>🌍 Greenhouse Gas Emission Predictor</h1>
+
+    <form method="post">
+        <label for="country">Select Country:</label>
+        <select name="country">
+            {% for country in countries %}
+                <option value="{{ country }}" {% if selected == country %}selected{% endif %}>{{ country }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Predict Emissions">
+    </form>
+
+    <h2>📊 Predicted CO₂ Emissions for {{ selected }} (2025–2035)</h2>
+
+    <table>
+        <tr>
+            <th>Year</th>
+            <th>Predicted CO₂ Emissions (per Capita)</th>
+        </tr>
+        {% for year, value in predictions %}
+        <tr>
+            <td>{{ year }}</td>
+            <td>{{ "%.2f"|format(value) }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <img src="{{ plot_path }}" alt="Emission Trend Graph">
+
+</body>
+</html>
